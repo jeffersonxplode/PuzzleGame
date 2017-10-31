@@ -121,6 +121,8 @@ void UGrabber::Grab() {
 	auto ComponentToGrab = HitResult.GetComponent();
 	auto ActorHit = HitResult.GetActor();
 
+	
+
 	if (ActorHit) {
 				PhysicsHandler->GrabComponentAtLocationWithRotation(
 					ComponentToGrab,

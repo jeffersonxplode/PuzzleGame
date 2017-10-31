@@ -8,6 +8,7 @@
 #include "OpenDoor.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PUZZLEGAME_API UOpenDoor : public UActorComponent
@@ -18,6 +19,13 @@ public:
 	// Sets default values for this component's properties
 	UOpenDoor();
 
+	UPROPERTY(BlueprintAssignable)
+	FDoorEvent OnOpen;
+
+	UPROPERTY(BlueprintAssignable)
+	FDoorEvent OnClose;
+
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -25,20 +33,18 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	virtual void OpenDoor();
-	virtual void CloseDoor();
+
+
+	float GetTotalMassOfActorOnPlate();
 
 private:
+	
+	UPROPERTY(EditAnywhere)
+		float TriggerMass = 30.f;
 
-	AActor *ActorThatOpens;
 	AActor *Owner;
 
 	UPROPERTY(EditAnywhere)
-		ATriggerVolume *PressurePlate;
-
-	UPROPERTY(EditAnywhere)
-		float DoorCloseDelay = 1.f;
-
-		float LastDoorOpenTime;
+		ATriggerVolume *PressurePlate = nullptr;
 
 };
